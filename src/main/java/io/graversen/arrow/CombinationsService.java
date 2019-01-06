@@ -1,6 +1,7 @@
 package io.graversen.arrow;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class CombinationsService
 {
@@ -81,5 +82,15 @@ public class CombinationsService
         }
 
         return nextCombination;
+    }
+
+    public Stream<String> computeCombinations()
+    {
+        return Stream.generate(this::computeNext);
+    }
+
+    public long getCombinationsGenerated()
+    {
+        return combinationsGenerated;
     }
 }
