@@ -15,11 +15,25 @@
         </repository>
     </repositories>
 
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
     <dependencies>
+        <!-- Libs -->
         <dependency>
             <groupId>com.github.MrGraversen</groupId>
             <artifactId>Trunk</artifactId>
             <version>0.0.10</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
