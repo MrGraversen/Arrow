@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class Arrow
+public class Arrow implements AutoCloseable
 {
     private final CombinationsService combinationsService;
     private final Collection<Transformer> transformers;
@@ -32,13 +32,19 @@ public class Arrow
         );
     }
 
+    @Override
+    public void close()
+    {
+        combinationsExecutorService.shutdownNow();
+    }
+
     public static class ArrowBuilder
     {
         private CombinationsService combinationsService;
         private List<Transformer> transformers;
         private List<Logger> loggers;
 
-        public ArrowBuilder(CombinationsService combinationsService)
+        ArrowBuilder(CombinationsService combinationsService)
         {
             this.combinationsService = combinationsService;
             this.transformers = new ArrayList<>();
