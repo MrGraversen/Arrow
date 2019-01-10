@@ -1,5 +1,5 @@
 # Arrow
-Code kata to figure out efficient permutation generation and transformation (Colloquially, brute forcing 🕵️)
+[*Code kata*](https://en.wikipedia.org/wiki/Kata_(programming)) to figure out efficient permutation generation and transformation (Colloquially, brute forcing 🕵️)
 
 ## Goals
 
