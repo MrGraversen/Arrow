@@ -1,7 +1,6 @@
 package io.graversen.arrow;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -9,36 +8,72 @@ import java.util.concurrent.Future;
 public class Arrow
 {
     private final CombinationsService combinationsService;
+    private final Collection<Transformer> transformers;
+    private final Collection<Logger> loggers;
     private final ExecutorService combinationsExecutorService;
 
-    public Arrow(CombinationsService combinationsService)
+    private Arrow(Collection<Transformer> transformers, Collection<Logger> loggers, CombinationsService combinationsService)
     {
+        this.transformers = transformers;
+        this.loggers = loggers;
         this.combinationsService = combinationsService;
         this.combinationsExecutorService = Executors.newSingleThreadExecutor();
     }
 
+    public static ArrowBuilder using(CombinationsService combinationsService)
+    {
+        return new ArrowBuilder(combinationsService);
+    }
+
     public Future<String> tryFind(String target)
     {
-        return tryFind(target, Collections.emptyList());
+        return combinationsExecutorService.submit(
+                new ArrowJob(target, combinationsService, transformers, loggers)
+        );
     }
 
-    public Future<String> tryFind(String target, Transformer transformer)
+    public static class ArrowBuilder
     {
-        return tryFind(target, Collections.singletonList(transformer));
-    }
+        private CombinationsService combinationsService;
+        private List<Transformer> transformers;
+        private List<Logger> loggers;
 
-    public Future<String> tryFind(String target, Collection<Transformer> transformers)
-    {
-        return tryFind(target, transformers, Collections.emptyList());
-    }
+        public ArrowBuilder(CombinationsService combinationsService)
+        {
+            this.combinationsService = combinationsService;
+            this.transformers = new ArrayList<>();
+            this.loggers = new ArrayList<>();
+        }
 
-    public Future<String> tryFind(String target, Transformer transformer, Logger logger)
-    {
-        return tryFind(target, Collections.singletonList(transformer), Collections.singletonList(logger));
-    }
+        public ArrowBuilder withTransformer(Transformer transformer)
+        {
+            return this.withTransformers(transformer);
+        }
 
-    public Future<String> tryFind(String target, Collection<Transformer> transformers, Collection<Logger> loggers)
-    {
-        return combinationsExecutorService.submit(new ArrowJob(target, combinationsService, transformers, loggers));
+        public ArrowBuilder withTransformers(Transformer... transformers)
+        {
+            this.transformers.addAll(Arrays.asList(transformers));
+            return this;
+        }
+
+        public ArrowBuilder withLogger(Logger logger)
+        {
+            return this.withLoggers(logger);
+        }
+
+        public ArrowBuilder withLoggers(Logger... loggers)
+        {
+            this.loggers.addAll(Arrays.asList(loggers));
+            return this;
+        }
+
+        public Arrow build()
+        {
+            return new Arrow(
+                    Collections.unmodifiableCollection(transformers),
+                    Collections.unmodifiableCollection(loggers),
+                    combinationsService
+            );
+        }
     }
 }
