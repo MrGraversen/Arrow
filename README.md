@@ -62,7 +62,7 @@ Using the previous setup and the following method call:
 arrow.tryFind("02c425157ecd32f259548b33402ff6d3");  // => MD5("zzzz")
 ```
 
-The runtime performance is about **0.8%** compared to the previous result, most of the overhead added by `System.out`.
+The runtime performance is about **0.8%** compared to the previous result. If `System.out` is skipped, it becomes much faster.
 
 ```
 [result=zzzz, attempts=3727490, duration=23101 ms, performance=161356.22 op/s]
