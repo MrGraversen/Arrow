@@ -25,7 +25,7 @@ public class Arrow implements AutoCloseable
         return new ArrowBuilder(combinationsService);
     }
 
-    public Future<String> tryFind(String target)
+    public Future<ArrowResult> tryFind(String target)
     {
         return combinationsExecutorService.submit(
                 new ArrowJob(target, combinationsService, transformers, loggers)
