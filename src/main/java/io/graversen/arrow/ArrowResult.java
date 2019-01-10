@@ -34,6 +34,7 @@ public class ArrowResult
 
     public double getAttemptsPerSecond()
     {
+        if (getDuration() == 0d) return 0d;
         return (double) getAttempts() / ((double) getDuration() / 1000d);
     }
 
@@ -47,7 +48,7 @@ public class ArrowResult
     {
         return String.format(
                 "ArrowResult = [result=%s, attempts=%d, duration=%d ms, performance=%.2f op/s]",
-                getResult(),
+                Objects.requireNonNullElse(getResult(), "[DNF]"),
                 getAttempts(),
                 getDuration(),
                 getAttemptsPerSecond()
