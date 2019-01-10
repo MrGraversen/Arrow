@@ -32,6 +32,11 @@ public class ArrowResult
         return end - start;
     }
 
+    public double getAttemptsPerSecond()
+    {
+        return (double) getAttempts() / ((double) getDuration() / 1000d);
+    }
+
     private boolean success()
     {
         return Objects.nonNull(result);
@@ -40,6 +45,12 @@ public class ArrowResult
     @Override
     public String toString()
     {
-        return String.format("ArrowResult = [result=%s, attempts=%d, duration %dms]", getResult(), getAttempts(), getDuration());
+        return String.format(
+                "ArrowResult = [result=%s, attempts=%d, duration=%d ms, performance=%.2f op/s]",
+                getResult(),
+                getAttempts(),
+                getDuration(),
+                getAttemptsPerSecond()
+        );
     }
 }
