@@ -29,6 +29,16 @@ public class Arrow
 
     public Future<String> tryFind(String target, Collection<Transformer> transformers)
     {
-        return combinationsExecutorService.submit(new ArrowJob(target, combinationsService, transformers));
+        return tryFind(target, transformers, Collections.emptyList());
+    }
+
+    public Future<String> tryFind(String target, Transformer transformer, Logger logger)
+    {
+        return tryFind(target, Collections.singletonList(transformer), Collections.singletonList(logger));
+    }
+
+    public Future<String> tryFind(String target, Collection<Transformer> transformers, Collection<Logger> loggers)
+    {
+        return combinationsExecutorService.submit(new ArrowJob(target, combinationsService, transformers, loggers));
     }
 }
