@@ -1,4 +1,4 @@
-package io.graversen.arrow;
+package io.graversen.arrow.util;
 
 import java.util.function.Function;
 

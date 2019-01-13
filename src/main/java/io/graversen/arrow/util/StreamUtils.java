@@ -1,10 +1,10 @@
-package io.graversen.arrow;
+package io.graversen.arrow.util;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-class StreamUtils
+public class StreamUtils
 {
     private StreamUtils()
     {

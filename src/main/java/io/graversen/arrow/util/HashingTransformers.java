@@ -1,4 +1,4 @@
-package io.graversen.arrow;
+package io.graversen.arrow.util;
 
 import io.graversen.trunk.hashing.DigestAlgorithms;
 import io.graversen.trunk.hashing.DigestUtils;
