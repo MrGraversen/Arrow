@@ -4,6 +4,7 @@
 ## Goals
 
 * Generate permutations of an ideograph (the english alphabet, numbers, emojis, whatever!)
+* Non-recursive computation (space complexity of semi-infinite resources punishes the stack)
 * Expose permutations as an infinite resource (A `java.util Stream<String>` in this case)
 * Work on a continous flow of computed permutations in a chain of operations, allowing a "lifecycle" for the infinite resource
 * Allow async computation
